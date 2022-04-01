@@ -78,7 +78,8 @@ def kmeans(
         initial_state = cluster_centers
         dis = pairwise_distance_function(X, initial_state)
         choice_points = torch.argmin(dis, dim=0)
-        initial_state = X[choice_points]
+        if torch.isnan(selected.mean(dim=0)).sum()==0:
+            initial_state = X[choice_points]
         initial_state = initial_state.to(device)
 
     iteration = 0
